@@ -1,6 +1,6 @@
 Prerequisites:
 --------------
-Java 1.7
+Jdk 1.7
 Maven 3+
 
 Build the project:
@@ -14,9 +14,8 @@ Can be found at http://localhost:8080/servers.
 
 The accepted json format is as follows;
 {
-  "serverId": 1,
-  "serverMachineReadableName": "Tucano",
-  "serverDescription": "Continuous Integration",
-  "serverApplications": "Jenkins",
-  "serverStatus": "ACTIVE"
+  "serverDescription": "Continous Integration",
+  "serverApplication": "Gerrit",
+  "serverStatus": "ACTIVE",
+  "serverMachineReadableName": "Tucano"
 }
