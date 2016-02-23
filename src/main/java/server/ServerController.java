@@ -1,19 +1,76 @@
 package server;
 
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.List;
+import java.util.HashMap;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class ServerController {
+@RequestMapping("/server")
+public class ServerController{
+	@Autowired
+	private ServerRepository serverRepository;
 
-    private static final String template = "%s";
-    private final AtomicLong counter = new AtomicLong();
+	@RequestMapping(method = RequestMethod.POST)
+	public Map<String, Object> createServer(@RequestBody Map<String, Object> serverMap){
+		Server server = new Server(serverMap.get("serverDescription").toString(),
+				serverMap.get("serverApplications").toString(),
+				serverMap.get("serverStatus").toString(),
+				serverMap.get("serverMachineReadableName").toString());
 
-    @RequestMapping("/servers")
-    public Server server(@RequestParam(value="name", defaultValue="Jenkins") String name) {
-        return new Server(counter.incrementAndGet(), "tucano", "Continuous Integration",
-                            String.format(template, name), "ACTIVE");
-    }
+		Map<String, Object> response = new LinkedHashMap<String, Object>();
+		response.put("message", "Server created successfully");
+		response.put("server", serverRepository.save(server));
+
+		return response;
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value="/{serverId}")
+	public Server getServerDetails(@PathVariable("serverId") String serverId){
+		return serverRepository.findOne(serverId);
+	}
+
+	@RequestMapping(method = RequestMethod.GET)
+	public Map<String, Object> getAllServers(){
+		List<Server> servers = serverRepository.findAll();
+		Map<String, Object> response = new LinkedHashMap<String, Object>();
+
+		response.put("totalServers", servers.size());
+		response.put("servers", servers);
+
+		return response;
+	}
+
+	@RequestMapping(method = RequestMethod.PUT, value="/{serverId}")
+	public Map<String, Object> updateServer(@PathVariable("serverId") String serverId,
+					@RequestBody Map<String, Object> serverMap){
+
+		Server server = new Server(serverMap.get("serverDescription").toString(),
+					serverMap.get("serverApplications").toString(),
+					serverMap.get("serverStatus").toString(),
+					serverMap.get("serverMachineReadableName").toString());
+
+		server.setServerId(serverId);
+		Map<String, Object> response = new LinkedHashMap<String, Object>();
+		response.put("message", "Server updated successfully");
+		response.put("server", serverRepository.save(server));
+
+		return response;
+	}
+
+	@RequestMapping(method = RequestMethod.DELETE, value="/{serverId}")
+	public Map<String, String> deleteServer(@PathVariable("serverId") String serverId){
+		serverRepository.delete(serverId);
+		Map<String, String> response = new HashMap<String, String>();
+		response.put("message", "Server deleted successfully");
+
+		return response;
+	}
 }

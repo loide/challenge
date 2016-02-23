@@ -1,23 +1,31 @@
 package server;
 
+import org.springframework.data.annotation.Id;
+
 public class Server {
 
-    private long serverId;
+    @Id
+    private String serverId;
     private String serverMachineReadableName;
     private String serverDescription;
     private String serverApplications;
     private String serverStatus;
 
-    public Server(long serverId, String serverMachineReadableName, String serverDescription, String serverApplications, String serverStatus) {
-        this.serverId = serverId;
+    public Server() {};
+
+    public Server(String serverDescription, String serverApplications, String serverStatus, String serverMachineReadableName) {
         this.serverMachineReadableName = serverMachineReadableName;
-	this.serverDescription = serverDescription;
-	this.serverApplications = serverApplications;
-	this.serverStatus = serverStatus;
+        this.serverDescription = serverDescription;
+        this.serverApplications = serverApplications;
+        this.serverStatus = serverStatus;
     }
 
-    public long getServerId(){
+    public String getServerId(){
         return serverId;
+    }
+
+    public void setServerId(String serverId){
+	this.serverId = serverId;
     }
 
     public String getMachineReadableName(){
@@ -51,4 +59,5 @@ public class Server {
     public void setServerStatus(String serverStatus){
 	this.serverStatus = serverStatus;
     }
+
 }
