@@ -1,4 +1,4 @@
-package server;
+package server.model;
 
 import org.springframework.data.annotation.Id;
 

@@ -1,4 +1,6 @@
-package server;
+package server.repository;
+
+import server.model.Server;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
