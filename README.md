@@ -1,7 +1,7 @@
 Prerequisites:
 --------------
-Jdk 1.7
-Maven 3+
+- Jdk 1.7
+- Maven 3+
 
 Build the project:
 ------------------
@@ -10,12 +10,13 @@ mvn spring-boot:run
 
 Available Services:
 -------------------
-Can be found at http://localhost:8080/servers.
+Can be found at http://localhost:8080/server.
 
-The accepted json format is as follows;
-{
-  "serverDescription": "Continous Integration",
-  "serverApplication": "Gerrit",
-  "serverStatus": "ACTIVE",
-  "serverMachineReadableName": "Tucano"
-}
+The accepted json format is as follows:
+
+	{
+	  "serverDescription": "Continous Integration",
+  	  "serverApplication": "Gerrit",
+	  "serverStatus": "ACTIVE",
+	  "serverMachineReadableName": "Tucano"
+	}
