@@ -23,7 +23,8 @@ public class ServerController{
 		Server server = new Server(serverMap.get("serverDescription").toString(),
 				serverMap.get("serverApplications").toString(),
 				serverMap.get("serverStatus").toString(),
-				serverMap.get("serverMachineReadableName").toString());
+				serverMap.get("serverMachineReadableName").toString(),
+				serverMap.get("serverIP").toString());
 
 		Map<String, Object> response = new LinkedHashMap<String, Object>();
 		response.put("message", "Server created successfully");
@@ -55,7 +56,8 @@ public class ServerController{
 		Server server = new Server(serverMap.get("serverDescription").toString(),
 					serverMap.get("serverApplications").toString(),
 					serverMap.get("serverStatus").toString(),
-					serverMap.get("serverMachineReadableName").toString());
+					serverMap.get("serverMachineReadableName").toString(),
+					serverMap.get("serverIP").toString());
 
 		server.setServerId(serverId);
 		Map<String, Object> response = new LinkedHashMap<String, Object>();

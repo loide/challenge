@@ -10,14 +10,16 @@ public class Server {
     private String serverDescription;
     private String serverApplications;
     private String serverStatus;
+    private String serverIP;
 
     public Server() {};
 
-    public Server(String serverDescription, String serverApplications, String serverStatus, String serverMachineReadableName) {
+    public Server(String serverDescription, String serverApplications, String serverStatus, String serverMachineReadableName, String serverIP) {
         this.serverMachineReadableName = serverMachineReadableName;
         this.serverDescription = serverDescription;
         this.serverApplications = serverApplications;
         this.serverStatus = serverStatus;
+	this.serverIP = serverIP;
     }
 
     public String getServerId(){
@@ -58,6 +60,14 @@ public class Server {
 
     public void setServerStatus(String serverStatus){
 	this.serverStatus = serverStatus;
+    }
+
+    public String getServerIP(){
+	return serverIP;
+    }
+
+    public void setServerIP(){
+	this.serverIP = serverIP;
     }
 
 }
