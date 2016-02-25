@@ -18,5 +18,6 @@ The accepted json format is as follows:
 	  "serverDescription": "Continous Integration",
   	  "serverApplication": "Gerrit",
 	  "serverStatus": "ACTIVE",
+	  "serverIP": "10.0.0.5",
 	  "serverMachineReadableName": "Tucano"
 	}
