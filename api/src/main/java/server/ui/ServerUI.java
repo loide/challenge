@@ -41,48 +41,44 @@ public class ServerUI extends UI {
     @Override
     protected void init(VaadinRequest request){
 	HorizontalLayout actions = new HorizontalLayout(filter, btnAddNewServer);
-	actions.setWidth("100%");
-	filter.setWidth("100%");
-	actions.setExpandRatio(filter, 1);
-
 	VerticalLayout mainLayout = new VerticalLayout(actions, grid, form);
-	mainLayout.setSizeFull();
-	grid.setSizeFull();
-	mainLayout.setExpandRatio(grid, 1);
 	setContent(mainLayout);
 
 	actions.setSpacing(true);
-	mainLayout.setMargin(true);
-	mainLayout.setSpacing(true);
+        mainLayout.setMargin(true);
+        mainLayout.setSpacing(true);
 
-	grid.setHeight(300, Unit.PIXELS);
-	grid.setColumns("serverId", "serverDescription", "serverApplications", "serverStatus", "machineReadableName", "serverIP");
+	grid.setHeight(200, Unit.PIXELS);
+	grid.setWidth("100%");
+        grid.setColumns("serverId","serverDescription", "serverApplications", "serverStatus", "machineReadableName", "serverIP");
+        grid.removeColumn("serverId");
+
 	filter.setInputPrompt("Filter by Application");
-
 	filter.addTextChangeListener(e -> listServers(e.getText()));
 
 	grid.addSelectionListener(e -> {
-		if (e.getSelected().isEmpty()){
-			form.setVisible(false);
-		} else {
-			form.editServer((Server) e.getSelected().iterator().next());
-		}
-	});
+                if (e.getSelected().isEmpty()){
+                        form.setVisible(false);
+                } else {
+                        form.editServer((Server) e.getSelected().iterator().next());
+                }
+        });
 
 	btnAddNewServer.addClickListener(e -> form.editServer(new Server("", "", "", "", "")));
-	form.setChangeHandler(() -> {
-		form.setVisible(false);
-		listServers(filter.getValue());
-	});
 
-	listServers(null);
+	form.setChangeHandler(() -> {
+                form.setVisible(false);
+                listServers(filter.getValue());
+        });
+
+        listServers(null);
     }
 
     private void listServers(String text) {
 	if (StringUtils.isEmpty(text)) {
 		grid.setContainerDataSource(new BeanItemContainer(Server.class, repo.findAll()));
 	} else {
-		// TODO implement findByApplication
+		grid.setContainerDataSource(new BeanItemContainer(Server.class, repo.findByServerApplicationsLike(text)));
 	}
     }
 }
