@@ -52,6 +52,11 @@ public class ServerUI extends UI {
 	grid.setWidth("100%");
         grid.setColumns("serverId","serverDescription", "serverApplications", "serverStatus", "machineReadableName", "serverIP");
         grid.removeColumn("serverId");
+	grid.getColumn("serverDescription").setExpandRatio(1);
+	grid.getColumn("serverApplications").setMaximumWidth(800);
+	grid.getColumn("serverStatus").setExpandRatio(1);
+	grid.getColumn("machineReadableName").setExpandRatio(1);
+	grid.getColumn("serverIP").setExpandRatio(1);
 
 	filter.setInputPrompt("Filter by Application");
 	filter.addTextChangeListener(e -> listServers(e.getText()));

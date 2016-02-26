@@ -11,6 +11,7 @@ import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 import com.vaadin.ui.Notification;
@@ -33,7 +34,7 @@ public class ServerForm extends VerticalLayout {
 
 	/* Fields to edit properties in Server entity */
 	TextField serverDescription = new TextField("Description");
-	TextField serverApplications = new TextField("Applications");
+	TextArea serverApplications = new TextArea("Applications");
 	TextField serverStatus = new TextField("Status");
 	TextField machineReadableName = new TextField("Machine Name");
 	TextField serverIP = new TextField("IP");
@@ -48,21 +49,17 @@ public class ServerForm extends VerticalLayout {
 	@Autowired
 	public ServerForm(ServerRepository repo) {
 		this.repo = repo;
-
+		serverApplications.setWidth("100%");
+		serverApplications.setMaxLength(1500);
 		addComponents(serverDescription, serverApplications, serverStatus, machineReadableName, serverIP, actions);
 
 		// Configure and style components
 		setSpacing(true);
 		actions.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
-		save.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		save.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 
 		// wire action buttons to save, delete and reset
-		//save.addClickListener(e -> repo.save(server));
 		save.addClickListener(e->save(server));
-		//delete.addClickListener(e -> repo.delete(server));
 		delete.addClickListener(e->delete(server));
-		//cancel.addClickListener(e -> editServer(server));
 		access.addClickListener(e->access(server));
 		setVisible(false);
 	}
@@ -73,7 +70,7 @@ public class ServerForm extends VerticalLayout {
 			repo.save(server);
 			String msg = String.format("Saved '%s %s'.",
 				server.getServerDescription(),
-				server.getServerApplications());
+				server.getMachineReadableName());
 			Notification.show(msg,Type.TRAY_NOTIFICATION);
 		} catch (FieldGroup.CommitException e) {
 			// Validation exceptions could be shown here
@@ -86,7 +83,7 @@ public class ServerForm extends VerticalLayout {
 			repo.delete(server);
 			String msg = String.format("Deleted '%s %s'.",
 				server.getServerDescription(),
-				server.getServerApplications());
+				server.getMachineReadableName());
 			Notification.show(msg,Type.TRAY_NOTIFICATION);
 		} catch (FieldGroup.CommitException e){
 			//Validation exception could be show here
