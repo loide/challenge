@@ -1,7 +1,8 @@
 Prerequisites:
 --------------
-- Jdk 1.7
+- Jdk 1.8
 - Maven 3+
+- MongoDB
 
 Build the project:
 ------------------
@@ -10,7 +11,7 @@ mvn spring-boot:run
 
 Available Services:
 -------------------
-Can be found at http://localhost:8080/server.
+CRUD can be found at http://localhost:8080
 
 The accepted json format is as follows:
 
@@ -19,5 +20,5 @@ The accepted json format is as follows:
   	  "serverApplication": "Gerrit",
 	  "serverStatus": "ACTIVE",
 	  "serverIP": "10.0.0.5",
-	  "serverMachineReadableName": "Tucano"
+	  "machineReadableName": "Tucano"
 	}
