@@ -91,7 +91,12 @@ public class ServerForm extends VerticalLayout {
 	}
 
 	public void access(Server server){
-		//TODO Create a ssh connection with the server machine
+		try{
+			String[] command = { "xterm", "-hold", "-e", "cd ../vm ; vagrant ssh " + server.getMachineReadableName() + "; dpkg --get-selections | cut -f1 ;bash"};
+			Runtime.getRuntime().exec(command);
+		} catch (Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	public interface ChangeHandler {
