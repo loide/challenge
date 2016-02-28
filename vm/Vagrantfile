@@ -1,0 +1,37 @@
+Vagrant.configure(2) do |config|
+  config.vm.define "serverapi" do |serverapi|
+	serverapi.vm.box = "ubuntu/trusty64"
+	serverapi.vm.hostname = "serverapi.localdomain"
+  	serverapi.vm.network :forwarded_port, guest: 8080, host: 9000
+	serverapi.vm.provision "file", source: "../api", destination: "api"
+
+	serverapi.vm.provider :virtualbox do |vb|
+                vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+                vb.customize ["modifyvm", :id, "--name", "serverapi"]
+        end
+
+	serverapi.vm.provision :shell do |sh|
+		sh.privileged = false
+		sh.path = "setup-serverapi.sh"
+	end
+	serverapi.ssh.forward_x11 = "true"
+   end
+
+   config.vm.define "server1" do |server1|
+	server1.vm.box = "ubuntu/trusty64"
+	server1.vm.hostname = "server1.localdomain"
+	server1.vm.provision "file", source: "../scripts/createserver1.sh", destination: "createserver1.sh"
+
+	server1.vm.provider :virtualbox do |vb|
+                vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+                vb.customize ["modifyvm", :id, "--name", "server1"]
+        end
+
+	server1.vm.provision :shell do |sh|
+                sh.privileged = false
+                sh.path = "setup-server1.sh"
+	end
+
+   end
+
+end
